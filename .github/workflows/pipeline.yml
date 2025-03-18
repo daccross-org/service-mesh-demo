@@ -21,3 +21,10 @@ jobs:
       run-unit-tests: ${{ needs.prepare-environment.outputs.run-unit-tests }}
       docker-tag-prefix: "dev-"
       docker-in-login: true
+    secrets:
+      docker-in-registry: ${{ secrets.DOCKER_IN_REGISTRY }}
+      docker-in-username: ${{ secrets.DOCKER_IN_USER }}
+      docker-in-password: ${{ secrets.DOCKER_IN_PASS }}
+      docker-out-registry: ${{ secrets.DOCKER_OUT_REGISTRY }}
+      docker-out-username: ${{ secrets.DOCKER_OUT_USER }}
+      docker-out-password: ${{ secrets.DOCKER_OUT_PASS }}
