@@ -12,7 +12,7 @@ permissions: write-all
 jobs:
   pipeline-ci:
     name: Pipeline CI
-    uses: dacross-org/infra/.github/workflows/pipeline-node@main
+    uses: dacross-org/infra/.github/workflows/pipeline-node.yml@main
     needs: prepare-environment
     with: 
       project-key: service-mesh-demo
