@@ -1,4 +1,4 @@
-name: Workflow Pipeline Frontend
+name: Workflow Pipeline
 on:
   workflow_dispatch:
     inputs:
@@ -6,14 +6,13 @@ on:
         description: "true/false run unit tests"
         required: false
         type: string
-        default: ''
+        default: 'false'
 
 permissions: write-all
 jobs:
   pipeline-ci:
     name: Pipeline CI
     uses: dacross-org/infra/.github/workflows/pipeline-node.yml@main
-    needs: prepare-environment
     with: 
       project-key: service-mesh-demo
       base-dir: .
