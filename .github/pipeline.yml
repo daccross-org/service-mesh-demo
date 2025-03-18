@@ -1,0 +1,23 @@
+name: Workflow Pipeline Frontend
+on:
+  workflow_dispatch:
+    inputs:
+      run-unit-tests:
+        description: "true/false run unit tests"
+        required: false
+        type: string
+        default: ''
+
+permissions: write-all
+jobs:
+  pipeline-ci:
+    name: Pipeline CI
+    uses: dacross-org/infra/.github/workflows/pipeline-node@main
+    needs: prepare-environment
+    with: 
+      project-key: service-mesh-demo
+      base-dir: .
+      base-href: /
+      run-unit-tests: ${{ needs.prepare-environment.outputs.run-unit-tests }}
+      docker-tag-prefix: "dev-"
+      docker-in-login: true

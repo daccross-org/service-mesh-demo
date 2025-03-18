@@ -1,0 +1,50 @@
+version: '3.8'
+
+networks:
+  chains:
+
+services:
+  jaeger:
+    image: jaegertracing/all-in-one:1.29
+    networks:
+      - chains
+    ports:
+      - "16686:16686"
+
+  aa:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      - chains
+    ports:
+      - "3000:3000"
+    environment:
+      JUMPS: 6
+      ID: A
+      CHAIN_SVC: http://bb:3000/chain
+      JAEGER_COLLECTOR_ENDPOINT: http://jaeger:14268/api/traces
+
+  bb:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      - chains
+    environment:
+      JUMPS: 6
+      ID: B
+      CHAIN_SVC: http://cc:3000/chain
+      JAEGER_COLLECTOR_ENDPOINT: http://jaeger:14268/api/traces
+
+  cc:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      - chains
+    environment:
+      JUMPS: 6
+      ID: C
+      CHAIN_SVC: http://aa:3000/chain
+      JAEGER_COLLECTOR_ENDPOINT: http://jaeger:14268/api/traces
